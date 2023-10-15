@@ -1,0 +1,9 @@
+provider "aws" {
+  profile = "terraform_user"
+  region = "ap-northeast-1"
+}
+
+resource "aws_instance" "hello-world" {
+  ami = "ami-0fd8f5842685ca887"
+  instance_type = "t2.micro"
+}
