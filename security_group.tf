@@ -1,10 +1,10 @@
-# --------------------------
+# ---------------------------------------------
 # Security Group
-# --------------------------
-# web sectcp3306y group
+# ---------------------------------------------
+# web security group
 resource "aws_security_group" "web_sg" {
   name        = "${var.project}-${var.environment}-web-sg"
-  description = "web front security group"
+  description = "web front role security group"
   vpc_id      = aws_vpc.vpc.id
 
   tags = {
@@ -32,7 +32,7 @@ resource "aws_security_group_rule" "web_in_https" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "web_in_tcp3000" {
+resource "aws_security_group_rule" "web_out_tcp3000" {
   security_group_id        = aws_security_group.web_sg.id
   type                     = "egress"
   protocol                 = "tcp"
@@ -57,7 +57,7 @@ resource "aws_security_group" "app_sg" {
 # opmng security group
 resource "aws_security_group" "opmng_sg" {
   name        = "${var.project}-${var.environment}-opmng-sg"
-  description = "operation and management server role security group"
+  description = "operation and management role security group"
   vpc_id      = aws_vpc.vpc.id
 
   tags = {
@@ -124,5 +124,3 @@ resource "aws_security_group_rule" "db_in_tcp3306" {
   to_port                  = 3306
   source_security_group_id = aws_security_group.app_sg.id
 }
-
-
